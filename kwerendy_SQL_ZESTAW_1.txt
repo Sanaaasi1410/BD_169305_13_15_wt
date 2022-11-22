@@ -43,3 +43,5 @@ ALTER TABLE postac ADD COLUMN pesel INT PRIMARY KEY NOT NULL;
 ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrenka');
 INSERT INTO postac('0','Gertruda Nieszczera','syrenka','2003-10-10','19');
 -3-
+-4-
+CREATE TABLE marynarz(id_postaci INT PRIMARY KEY AUTO_INCREMENT NOT NULL, nazwa VARCHAR(40), rodzaj ENUM('wiking','ptak','kobieta'), data_ur DATE, wiek INT UNSIGNED);
