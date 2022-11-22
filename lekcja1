@@ -3,6 +3,32 @@ INSERT INTO postac VALUES ('1', 'Bjorn', 'wiking', '1500-10-10', '522');
 INSERT INTO postac VALUES ('2', 'Drozd', 'ptak', '2000', '22');
 INSERT INTO postac VALUES ('3', 'Tesciowa', 'kobieta', '1992', '30');
 UPDATE postac SET wiek=88 where wiek=30;
+-2-
 CREATE TABLE walizka (id_walizki INT PRIMARY KEY AUTO_INCREMENT NOT NULL, pojemnosc INT UNSIGNED, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlasciciela INT FOREIGN KEY (id_wlasciciela) REFERENCES postac(id_postaci) ON DELETE CASCADE);
 ALTER TABLE walizka ALTER COLUMN kolor SET DEFAULT "rozowy";
-INSERT INTO walizka VALUES ('1', '3782','rozowy','1');
+INSERT INTO walizka VALUES ('0', '378','rozowy','1');
+INSERT INTO walizka VALUES ('0','20','teczowy','3');
+-3-
+CREATE TABLE izba (adres_budynku VARCHAR(50) NOT NULL, nazwa_izby VARCHAR(50), metraz INT UNSIGNED, wlasciciel INT REFERENCES postac(id_postaci) ON DELETE SET NULL, PRIMARY KEY (adres_budynku, nazwa_izby));
+ALTER TABLE izba ADD COLUMN kolor VARCHAR(40) DEFAULT "czarny" AFTER metraz;
+INSERT INTO izba VALUES ('Zodiaklana5', 'spizarnia','32','1');
+-4-
+CREATE TABLE przetwory (id_przetwory INT PRIMARY KEY, NOT NULL, rok_produkcji YEAR DEFAULT "1654", id_wykonawcy INT, FOREIGN KEY(id_wykonawcy) REFERENCES postac(id_postaci), zawartosc VARCHAR(50), dodatek VARCHAR(50) DEFAULT "papryczka_chilli", id_konsumenta INT FOREIGN KEY (id_konsumenta) REFERENCES postac(id_postaci);
+INSERT INTO przetwory VALUES ('0', 'DEFAULT','1,'Bigos','DEFAULT','1');
+-5-
+INSERT INTO postac VALUES(id_postaci,nazwa,rodzaj,data_ur,wiek) VALUES ('0','Andrzej','wiking','1980-03-02','40');
+INSERT INTO postac VALUES ('0','Szczepan','wiking','1994-02-02','28');
+INSERT INTO postac VALUES ('0','Mirek','wiking','1986-04-05','36');
+INSERT INTO postac VALUES ('0','Szymon','wiking','1956-09-08','66');
+INSERT INTO postac VALUES ('0','Maciej','wiking','1975-04-10','47');
+CREATE TABLE statek(nazwa statku PRIMARY KEY VARCHAR(50), rodzaj_statku ENUM('duzy','maly','motorowka','z_masztem','bez_masztu'), data_wodowania DATE, max_ladownosc INT;
+INSERT INTO statek VALUES('wikingowiec','z_masztem','2000-10-10','120000');
+INSERT INTO statek VALUES('perelka','bez_masztu',1999-10-10','10000');
+ALTER TABLE postac ADD COLUMN funkcja VARCHAR(50) AFTER rodzaj_statku;
+UPDATE postac SET funkcja = 'Kapitan' WHERE id_postaci = 1;
+ALTER TABLE postac ADD COLUMN statek VARCHAR(60);
+ALTER TABLE postac ADD FOREIGN KEY (statek) REFERENCES statek(nazwa_statku);
+UPDATE postac SET statek='wikingowiec' WHERE rodzaj='wiking';
+UPDATE postac SET statek='perelka' WHERE nazwa='drozd';
+DELETE FROM izba WHERE nazwa_izby = 'spizarnia';
+DROP TABLE izba;
