@@ -1,3 +1,4 @@
+-15-X-
 CREATE TABLE postac (id_postaci INT PRIMARY KEY AUTO_INCREMENT NOT NULL, nazwa VARCHAR(40), rodzaj ENUM('wiking','ptak','kobieta'), data_ur DATE, wiek INT UNSIGNED);
 INSERT INTO postac VALUES ('1', 'Bjorn', 'wiking', '1500-10-10', '522');
 INSERT INTO postac VALUES ('2', 'Drozd', 'ptak', '2000', '22');
@@ -32,3 +33,13 @@ UPDATE postac SET statek='wikingowiec' WHERE rodzaj='wiking';
 UPDATE postac SET statek='perelka' WHERE nazwa='drozd';
 DELETE FROM izba WHERE nazwa_izby = 'spizarnia';
 DROP TABLE izba;
+-22-XI-
+-1-
+DELETE FROM postac WHERE wiek=66;
+DELETE FROM postac WHERE wiek=47;
+
+-2-
+ALTER TABLE postac ADD COLUMN pesel INT PRIMARY KEY NOT NULL;
+ALTER TABLE postac MODIFY rodzaj ENUM('wiking','ptak','kobieta','syrenka');
+INSERT INTO postac('0','Gertruda Nieszczera','syrenka','2003-10-10','19');
+-3-
