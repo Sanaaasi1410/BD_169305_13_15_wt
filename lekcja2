@@ -1,0 +1,41 @@
+-1-
+DELETE FROM postac WHERE wiek=66;
+DELETE FROM postac WHERE wiek=47;
+ALTER TABLE przetwory DROP CONSTRAINT przetwory_ibfk_1;
+ALTER TABLE przetwory DROP CONSTRAINT przetwory_ibfk_2;
+ALTER TABLE walizka DROP CONSTRAINT walizka_ibfk_1;
+ALTER TABLE postac DROP PRIMARY KEY, CHANGE id_postaci id_postaci INT;
+-2-
+ALTER TABLE postac ADD Pesel varchar(11) NOT NULL FIRST;
+UPDATE postac SET pesel='03241401009' WHERE id_postaci=1;
+UPDATE postac SET pesel='77625628945' WHERE id_postaci=2;
+ UPDATE postac SET pesel='66837392029' WHERE id_postaci=3;
+ UPDATE postac SET pesel='63839209649' WHERE id_postaci=4;
+ UPDATE postac SET pesel='29387462534' WHERE id_postaci=5;
+UPDATE postac SET pesel='66739847554' WHERE id_postaci=6;
+ALTER TABLE postac ADD PRIMARY KEY(Pesel);
+ALTER TABLE postac MODIFY rodzaj enum('wiking','ptak','kobieta','syrena');
+INSERT INTO postac VALUES ('98304987261','10','Gertruda Nieszczera','syrena',DEFAULT,'2000-04-04','22',DEFAULT);
+-3-
+UPDATE postac SET statek='perleka' WHERE nazwa LIKE '%a%';
+UPDATE statek SET max_ladownosc = (max_ladownosc * 0.7) WHERE YEAR(data_wodowania) BETWEEN 1901 AND 2000;
+ALTER TABLE postac ADD CHECK (wiek<1000);
+-4-
+ALTER TABLE postac MODIFY rodzaj enum('wiking','ptak','kobieta','syrena','waz');
+INSERT INTO postac VALUES ('20128736481','11','Oli','waz',NULL,'2000-04-10','22',NULL);
+UPDATE postac SET id_postaci='11' WHERE nazwa='Oli';
+CREATE TABLE marynarz LIKE postac;
+INSERT INTO marynarz select * FROM postac WHERE statek IS NOT NULL;
+ALTER TABLE marynarz ADD FOREIGN KEY (statek) REFERENCES statek(nazwa_statku);
+-5-
+UPDATE marynarz SET statek = NULL WHERE id_postaci > 0;
+UPDATE postac SET statek = NULL WHERE id_postaci > 0;
+DELETE FROM postac WHERE nazwa='Mirek';
+DELETE FROM statek WHERE nazwa_statku = 'perleka';
+DELETE FROM statek WHERE nazwa_statku = 'strzala';
+ALTER TABLE postac DROP CONSTRAINT postac_ibfk_1;
+ALTER TABLE marynarz DROP CONSTRAINT marynarz_ibfk_1;
+DROP TABLE statek;
+CREATE TABLE zwierz (id INT PRIMARY KEY AUTO_INCREMENT,nazwa VARCHAR(30),wiek INT);
+INSERT INTO zwierz (id,nazwa,wiek) SELECT id_postaci,nazwa,wiek FROM postac WHERE nazwa = 'Oli' OR nazwa='Drozd';
+
