@@ -1,0 +1,22 @@
+-1-
+SELECT AVG(waga) AS srednia_waga_wikingow FROM kreatura WHERE rodzaj ='wiking';
+SELECT rodzaj, AVG(waga) AS srednia_waga, COUNT(rodzaj) AS count_rodzaj FROM kreatura GROUP BY rodzaj;
+SELECT rodzaj, AVG(YEAR(dataUr)) AS sredni_wiek FROM kreatura GROUP BY rodzaj;
+
+-2-
+SELECT nazwa, SUM(waga) AS sum_waga FROM zasob GROUP BY rodzaj;
+SELECT ilosc, AVG(waga) AS srednia_waga FROM zasob GROUP BY nazwa HAVING ilosc>=4 AND SUM(waga) >10;
+
+-3-
+SELECT kreatura.idKreatury, kreatura.nazwa, ekwipunek.idKreatury, count(ekwipunek.idZasobu) AS count_zasob, ekwipunek.ilosc FROM kreatura
+INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury GROUP BY kreatura.nazwa;
+SELECT zasob.nazwa, ekwipunek.idKreatury FROM zasob INNER JOIN ekwipunek ON ekwipunek.idZasobu=zasob.idZasobu;
+
+-4-
+SELECT kreatura.nazwa,zasob.nazwa FROM kreatura NATURAL JOIN ekwipunek 
+INNER JOIN zasob on zasob.idZasobu = ekwipunek.idZasobu 
+WHERE YEAR(kreatura.dataUr) BETWEEN 1670 AND 1779 AND kreatura.rodzaj = 'wiking';
+
+SELECT kreatura.nazwa, zasob.nazwa FROM kreatura NATURAL JOIN ekwipunek 
+INNER JOIN zasob ON zasob.idZasobu = ekwipunek.idZasobu WHERE zasob.rodzaj = 'jedzenie' ORDER BY kreatura.dataUr DESC LIMIT 5;
+
