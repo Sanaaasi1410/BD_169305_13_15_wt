@@ -16,3 +16,27 @@ INNER JOIN ekwipunek ON ekwipunek.idKreatury = kreatura.idKreatury
 GROUP BY wyprawa.nazwa;
 
 -2-
+SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika) AS ilu_uczestnikow, 
+GROUP_CONCAT(kreatura.nazwa) AS uczestnicy FROM wyprawa 
+INNER JOIN uczestnicy ON uczestnicy.id_wyprawy = wyprawa.id_wyprawy
+INNER JOIN kreatura ON kreatura.idKreatury = uczestnicy.id_uczestnika
+GROUP BY wyprawa.nazwa;
+
+SELECT kreatura.nazwa, sektor.nazwa FROM etapy_wyprawy
+INNER JOIN sektor ON  sektor.id_sektora = etapy_wyprawy.sektor
+INNER JOIN wyprawa ON wyprawa.id_wyprawy = etapy_wyprawy.idWyprawy
+INNER JOIN kreatura ON kreatura.idKreeatury = wyprawa.kierownik
+ORDER BY wyprawa.data_rozpoczecia DESC, etapy_wyprrawy.kolejnosc;
+
+-3-
+-4-
+-5-
+SELECT kreatura.nazwa, wyprawa.nazwa, DATEDIFF(wyprawa.data_rozpoczecia, kreatura.dataUr) AS wiek_w_dniach
+FROM kreatura
+INNER JOIN uczestnicy
+ON kreatura.idKreatury=uczestnicy.id_uczestnika
+INNER JOIN wyprawa
+ON uczestnicy.id_wyprawy=wyprawa.id_wyprawy
+INNER JOIN etapy_wyprawy
+ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy
+WHERE etapy_wyprawy.sektor=7;
