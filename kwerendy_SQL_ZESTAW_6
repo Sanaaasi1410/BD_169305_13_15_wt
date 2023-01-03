@@ -6,5 +6,11 @@ data_zakonczenia DATE, kierownik VARCHAR(50))
 -4-
 -4.1-
 CREATE TABLE system_alarmowy (id_alarmu INT NOT NULL PRIMARY KEY AUTO_INCREMENT, wiadomosc VARCHAR(40));
+delimiter //
+CREATE TRIGGER alarm BEFORE
+UPDATE ON wyprawa FOR EACH ROW IF wyprawa.id_uczestnika = 14 AND wyprawa.id_sektora = 7 THEN UPDATE system_alarmowy 
+SET wiadomosc = 'Tesciowa nadchodzi!!!' WHERE id_alarmu = 1;
+END IF;
+//
 -5-
 
