@@ -1,7 +1,7 @@
 -1-
 -2-
 CREATE TABLE archiwum_wypraw (id_wyprawy INT AUTO_INCREMENT PRIMARY KEY NOTNULL, nazwa VARCHAR(50), data_rozpoczecia DATE,
-data_zakonczenia DATE, kierownik VARCHAR(50))
+data_zakonczenia DATE, kierownik VARCHAR(50));
 -3-
 -4-
 -4.1-
